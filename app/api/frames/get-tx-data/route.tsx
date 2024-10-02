@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { parseEther } from "ethers/lib/utils";
-import { publicClient } from "@/middleware/viemClient"; // Assuming you have a public client for encoding ABI
+// import { parseEther } from "ethers/lib/utils";
 import { parseAbiItem } from "viem";
 
 // ABI for FairLaunch contract
@@ -33,7 +32,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         abi: fairLaunchAbi,
         to: fairLaunchAddress,
         data: callData,
-        value: parseEther(ethAmount).toString(), // Convert ETH amount to Wei
+        // value: parseEther(ethAmount).toString(), // Convert ETH amount to Wei
       },
     };
 
