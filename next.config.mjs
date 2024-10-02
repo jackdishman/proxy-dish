@@ -8,6 +8,14 @@ const nextConfig = {
     NEXT_PUBLIC_HOST: process.env["NEXT_PUBLIC_HOST"],
     NEYNAR_API_KEY: process.env["NEYNAR_API_KEY"],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
