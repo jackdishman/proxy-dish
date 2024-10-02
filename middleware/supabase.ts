@@ -51,9 +51,10 @@ export async function createReferral(fid: number): Promise<IReferral | undefined
 }
 
 export async function getMyPendingReferrals(fid: number) {
+  console.log("Getting my pending referrals for", fid);
   const { data, error } = await supabase
     .from("referrals")
     .select("*")
-    .filter("pending_referrals", "any", [fid]);
+    .filter("pending_referrals", "cs", `{${fid.toString()}}`); // Using `cs` to check if the array contains fidString
     return data as IReferral[];
 }

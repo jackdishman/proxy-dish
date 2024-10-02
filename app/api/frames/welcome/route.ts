@@ -11,13 +11,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const myPendingReferrals = await getMyPendingReferrals(fid);
     console.log("My Pending Referrals:", myPendingReferrals);
     const hasPendingReferrals = myPendingReferrals && myPendingReferrals.length > 0;
+    console.log("Has Pending Referrals:", hasPendingReferrals);
 
     let imageUrl: string;
     let postUrl: string;
     let buttonText: string | undefined;
     let inputText: string | undefined;
 
-    if (!referral) {
+    if (hasPendingReferrals) {
+      // user has to accept referrals
+      imageUrl = `${process.env["NEXT_PUBLIC_HOST"]}/api/frames/welcome/image`;
+      postUrl = `${process.env["NEXT_PUBLIC_HOST"]}/api/frames/pending-referrals`;
+      buttonText = "Accept or Reject Referrals";
+    } else if (!referral) {
       // No referrals, go to create referral frame
       imageUrl = `${process.env["NEXT_PUBLIC_HOST"]}/api/frames/welcome/image`;
       postUrl = `${process.env["NEXT_PUBLIC_HOST"]}/api/frames/new-referral`;
@@ -28,7 +34,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       postUrl = `${process.env["NEXT_PUBLIC_HOST"]}/api/frames/get-tx-data`;
       buttonText = "Send Transaction";
     } else if (referral.pending_referrals.length < 3) {
-      // Show add referral frame
+      // needs to refer more people
       imageUrl = `${process.env["NEXT_PUBLIC_HOST"]}/api/frames/add-reference/image?pending_referrals=${referral.pending_referrals?.join(',')}&accepted_referrals=${referral.accepted_referrals?.join(',')}`;
       postUrl = `${process.env["NEXT_PUBLIC_HOST"]}/api/frames/add-reference`;
       buttonText = "Submit";
