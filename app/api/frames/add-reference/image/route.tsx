@@ -8,12 +8,17 @@ const fontPath = join(process.cwd(), "Roboto-Regular.ttf");
 const fontData = fs.readFileSync(fontPath);
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-
   try {
     const { searchParams } = new URL(req.url);
-    const title = searchParams.get("title") ?? "Hello, World!";
-    const description =
-      searchParams.get("description") ?? "This is a description";
+    
+    // Parse pending_referrals
+    const pendingReferrals = searchParams.get('pending_referrals')?.split(',').filter(Boolean) || [];
+    
+    // Parse accepted_referrals
+    const acceptedReferrals = searchParams.get('accepted_referrals')?.split(',').filter(Boolean) || [];
+
+    console.log('Pending Referrals:', pendingReferrals);
+    console.log('Accepted Referrals:', acceptedReferrals);
 
     const svg = await satori(
       <div
@@ -63,9 +68,29 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
             fontWeight: "normal",
             color: "#ffcc00",
             textShadow: "1px 1px #000",
+            marginBottom: "20px",
           }}
         >
+          Referral Status
         </h3>
+        <div style={{ display: "flex", justifyContent: "space-around", width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <h4 style={{ fontSize: "36px", color: "#ffcc00", marginBottom: "10px" }}>Pending</h4>
+            <ul style={{ fontSize: "24px", textAlign: "left", padding: "0", margin: "0" }}>
+              {pendingReferrals.map((referral, index) => (
+                <li key={index} style={{ marginBottom: "5px" }}>{referral}</li>
+              ))}
+            </ul>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <h4 style={{ fontSize: "36px", color: "#ffcc00", marginBottom: "10px" }}>Accepted</h4>
+            <ul style={{ fontSize: "24px", textAlign: "left", padding: "0", margin: "0" }}>
+              {acceptedReferrals.map((referral, index) => (
+                <li key={index} style={{ marginBottom: "5px" }}>{referral}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>,
       {
         width: 1148, // 600 * 1.91
@@ -91,6 +116,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
+    console.error(error);
     return new NextResponse("Error generating image", { status: 500 });
   }
 }

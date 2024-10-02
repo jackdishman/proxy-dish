@@ -8,12 +8,17 @@ const fontPath = join(process.cwd(), "Roboto-Regular.ttf");
 const fontData = fs.readFileSync(fontPath);
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-
   try {
     const { searchParams } = new URL(req.url);
-    const title = searchParams.get("title") ?? "Hello, World!";
-    const description =
-      searchParams.get("description") ?? "This is a description";
+    
+    // Parse pending_referrals
+    const pendingReferrals = searchParams.get('pending_referrals')?.split(',').filter(Boolean) || [];
+    
+    // Parse accepted_referrals
+    const acceptedReferrals = searchParams.get('accepted_referrals')?.split(',').filter(Boolean) || [];
+
+    console.log('Pending Referrals:', pendingReferrals);
+    console.log('Accepted Referrals:', acceptedReferrals);
 
     const svg = await satori(
       <div

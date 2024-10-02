@@ -11,8 +11,8 @@ export async function getReferralsByCreatorFid(fid: number) {
   const { data, error } = await supabase
     .from("referrals")
     .select("*")
-    .eq("creator_fid", fid);
-  return data;
+    .eq("creator_fid", fid)
+  return data as IReferral[];
 }
 
 
@@ -21,19 +21,21 @@ export async function updateReferral(referral: IReferral) {
     const { data, error } = await supabase
       .from("referrals")
       .update(referral)
-      .eq("id", referral.id);
-    return data;
+      .eq("id", referral.id)
+      .select()
+      .single();
+    return data as IReferral;
 
   } catch(err) {
     console.error(err);
   }
 }
 
-export async function createReferral(fid: number, fname: string): Promise<IReferral | undefined> {
+export async function createReferral(fid: number): Promise<IReferral | undefined> {
   try {
     const { data, error } = await supabase
       .from("referrals")
-      .insert({ creator_fid: fid, pending_referrals: [fname], accepted_referrals: [] })
+      .insert({ creator_fid: fid, pending_referrals: [], accepted_referrals: [] })
       .select()
       .single();
     

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
 
-  const imageUrl = `${process.env["NEXT_PUBLIC_HOST"]}/test.png`;
+  const imageUrl = `${process.env["NEXT_PUBLIC_HOST"]}/api/frames/welcome/image`;
   console.log("imageUrl", imageUrl);
   const fcMetadata: Record<string, string> = {
     "fc:frame": "vNext",
