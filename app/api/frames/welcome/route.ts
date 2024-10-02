@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateMessage } from "@/middleware/farcaster";
-import { getReferralsByCreatorFid } from "@/middleware/supabase";
+import { getMyPendingReferrals, getReferralsByCreatorFid } from "@/middleware/supabase";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const { fid } = await validateMessage(req);
     const referrals = await getReferralsByCreatorFid(fid);
     const referral = referrals?.[0];
+
+    const myPendingReferrals = await getMyPendingReferrals(fid);
+    console.log("My Pending Referrals:", myPendingReferrals);
+    const hasPendingReferrals = myPendingReferrals && myPendingReferrals.length > 0;
 
     let imageUrl: string;
     let postUrl: string;
@@ -59,6 +63,7 @@ function generateFrameHtml(imageUrl: string, postUrl: string, buttonText?: strin
         <meta property="fc:frame:post_url" content="${postUrl}">
         ${buttonText ? `<meta property="fc:frame:button:1" content="${buttonText}">` : ''}
         ${inputText ? `<meta property="fc:frame:input:text" content="${inputText}">` : ''}
+        
       </head>
       <body></body>
     </html>

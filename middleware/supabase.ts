@@ -49,3 +49,11 @@ export async function createReferral(fid: number): Promise<IReferral | undefined
     console.error(err);
   }
 }
+
+export async function getMyPendingReferrals(fid: number) {
+  const { data, error } = await supabase
+    .from("referrals")
+    .select("*")
+    .filter("pending_referrals", "any", [fid]);
+    return data as IReferral[];
+}
