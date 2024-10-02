@@ -23,11 +23,11 @@ export async function validateMessage(req: NextRequest): Promise<{
     const neynarUrl = "https://api.neynar.com/v2/farcaster/frame/validate";
     const response = await fetch(neynarUrl, {
       method: "POST",
-      headers: {
+      headers: new Headers({
         accept: "application/json",
-        api_key: process.env.NEYNAR_API_KEY,
+        api_key: process.env.NEYNAR_API_KEY || '',
         "content-type": "application/json",
-      },
+      }),
       body: JSON.stringify({
         cast_reaction_context: true,
         follow_context: false,
