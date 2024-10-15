@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-
+import ClientContainer from "./ClientContainer";
 export async function generateMetadata(): Promise<Metadata> {
 
   const imageUrl = `${process.env["NEXT_PUBLIC_HOST"]}/test.png`;
@@ -29,5 +29,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  return <div>Page</div>;
+  return (
+    <div>
+      <ClientContainer />
+    </div>
+  );
 }

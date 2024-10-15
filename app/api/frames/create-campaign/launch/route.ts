@@ -64,7 +64,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     // Referral Contract Address
-    const referralContractAddress = "0x9f9297c6f87C30F2cd7fF3Ed55a2af2109d81FF5";
+    const referralContractAddress = "0x9a753226a630c97913f2de7f25e25d0481a9eedf";
 
     // Referral Contract ABI
     const referralContractABI = [
