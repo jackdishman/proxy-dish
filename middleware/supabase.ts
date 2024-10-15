@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { IReferral } from "@/types/referral";
+import { ICampaign, IReferral } from "@/types/referral";
 
 export const supabase = createClient(
   process.env["SUPABASE_URL"] ?? ``,
@@ -57,4 +57,13 @@ export async function getMyPendingReferrals(fid: number) {
     .select("*")
     .filter("pending_referrals", "cs", `{${fid.toString()}}`); // Using `cs` to check if the array contains fidString
     return data as IReferral[];
+}
+
+export async function getCampaign(id: string) {
+  const { data, error } = await supabase
+    .from("referral_campaigns")
+    .select("*")
+    .eq("id", id)
+    .single();
+  return data as ICampaign;
 }

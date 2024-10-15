@@ -68,3 +68,21 @@ export async function validateMessage(req: NextRequest): Promise<{
     return { fid: 0 }; // Return default fid in case of error
   }
 }
+
+export async function getUserByName(name: string): Promise<number> {
+  const neynarUrl = `https://api.neynar.com/v2/farcaster/user/search?q=${name}&limit=5`;
+
+  const response = await fetch(neynarUrl, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      api_key: process.env.NEYNAR_API_KEY || "",
+      "content-type": "application/json",
+    }
+  });
+
+  const data = await response.json();
+  console.log(data.result.users)
+
+  return data;
+}
