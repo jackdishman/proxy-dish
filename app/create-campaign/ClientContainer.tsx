@@ -6,7 +6,7 @@ import { base } from "viem/chains";
 import referralContractABI from '@/abi/ReferralContractFactory.json';
 import { IUser } from "@/types/referral";
 import { useRouter } from "next/navigation";
-const CONTRACT_ADDRESS = '0x9a753226a630c97913f2de7f25e25d0481a9eedf'
+const CONTRACT_ADDRESS = '0xb9f11a289764f699c5913383e59314845d49e118'
 
 export default function ClientContainer() {
   const router = useRouter();
