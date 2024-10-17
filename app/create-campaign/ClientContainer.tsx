@@ -249,22 +249,22 @@ export default function ClientContainer() {
                     >
                       View on BaseScan
                     </a>
+                    <button 
+                      onClick={() => {
+                        setShowPopup(false);
+                        setIsLoading(false);
+                        setTransactionHash('');
+                        setNewContractAddress('');
+                        router.push(`/campaign/${newContractAddress}`);
+                      }}
+                      className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 mt-4"
+                    >
+                      View Campaign
+                    </button>
                   </div>
                 )}
               </>
             )}
-            <button 
-              onClick={() => {
-                setShowPopup(false);
-                setIsLoading(false);
-                setTransactionHash('');
-                setNewContractAddress('');
-                router.push(`/campaign/${newContractAddress}`);
-              }}
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 mt-4"
-            >
-              View Campaign
-            </button>
           </div>
         </div>
       )}
