@@ -63,7 +63,7 @@ export async function getCampaign(id: string) {
   const { data, error } = await supabase
     .from("referral_campaigns")
     .select("*")
-    .eq("id", id)
+    .eq("contract_address", id)
     .single();
   return data as ICampaign;
 }

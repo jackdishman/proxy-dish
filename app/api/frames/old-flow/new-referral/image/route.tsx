@@ -17,9 +17,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     // Parse accepted_referrals
     const acceptedReferrals = searchParams.get('accepted_referrals')?.split(',').filter(Boolean) || [];
 
-    console.log('Pending Referrals:', pendingReferrals);
-    console.log('Accepted Referrals:', acceptedReferrals);
-
     const svg = await satori(
       <div
         style={{

@@ -9,7 +9,7 @@ export default function CopyClipboard({ campaignId }: { campaignId: string }) {
     };
   return (
     <div>
-      <button onClick={copyLink}>Copy URL and paste into cast, tag the users you need referrals from</button>
+      <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={copyLink}>Copy URL and paste into cast, tag the users you need referrals from</button>
     </div>
   )
 }
