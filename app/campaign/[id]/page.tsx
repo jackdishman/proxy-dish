@@ -2,6 +2,7 @@ import React from 'react'
 import { Metadata } from 'next'
 import { getCampaign } from '@/middleware/supabase';
 import CopyClipboard from './CopyClipboard';
+import CampaignContainer from './CampaignContainer';
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const campaign = await getCampaign(params.id)
@@ -47,6 +48,7 @@ export default async function CampaignRoute({ params }: { params: { id: string }
         <h2 className="text-xl font-semibold mb-2">Share this campaign</h2>
         <CopyClipboard campaignId={campaign.contract_address} />
       </div>
+      <CampaignContainer contractAddress={campaign.contract_address} />
     </div>
   )
 }
